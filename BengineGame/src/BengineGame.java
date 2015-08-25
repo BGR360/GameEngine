@@ -4,10 +4,20 @@
  * A test game utilizing the Bengine
  */
 
-public class BengineGame
+import com.bengine.core.Game;
+
+public class BengineGame extends Game
 {
     public static void main(String[] args)
     {
         System.out.println("Test Bengine Game!");
+
+        new BengineGame().run();
+    }
+
+    @Override
+    protected void update()
+    {
+
     }
 }
