@@ -1,4 +1,4 @@
-package com.bengine;
+package com.bengine.tests.game;
 
 /**
  * Created by Ben on 8/24/15.
