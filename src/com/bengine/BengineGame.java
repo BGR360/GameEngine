@@ -97,7 +97,7 @@ public class BengineGame {
         // LWJGL detects the context that is current in the current thread,
         // creates the ContextCapabilities instance and makes the OpenGL
         // bindings available for use.
-        //GL.createCapabilities(); // valid for latest build
+        GL.createCapabilities(true); // valid for latest build
         GLContext.createFromCurrent(); // use this line instead with the 3.0.0a build
 
         // Set the clear color
