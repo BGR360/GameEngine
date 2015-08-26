@@ -149,9 +149,18 @@ public class Matrix3f
         Vector3f up
     )
     {
-        return new Matrix3f(
+        //N: lookAt vector
+        Vector3f N = target.sub(position).normalized();
+        //U: right vector
+        Vector3f U = N.cross(up).normalized();
+        //V: up vector
+        Vector3f V = U.cross(N);
 
-        );
+        //Construct the matrix
+        return new Matrix3f(
+                U.x, U.y, U.z,
+                V.x, V.y, V.z,
+                -N.x, -N.y, -N.z);
     }
 
     public static Matrix3f lookAt(
