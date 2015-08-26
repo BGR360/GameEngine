@@ -11,6 +11,56 @@ import junit.framework.TestCase;
 public class Matrix2fTest extends TestCase
 {
 
+    static class Util
+    {
+        public static void assertFloatArrayEquals(float[][] expected, float[][] actual)
+        {
+            int rows = expected.length;
+            int cols = expected[0].length;
+            assertEquals("Rows: ", rows, actual.length);
+            assertEquals("Cols: ", cols, actual[0].length);
+            for(int i = 0; i < rows; i++)
+            {
+                for(int j = 0; j < cols; j++)
+                {
+                    assertEquals(
+                            "At [" + i + "][" + j + "]: ",
+                            expected[i][j], actual[i][j]
+                    );
+                }
+            }
+        }
+    }
+
+    public void testArrayCopy() throws Exception
+    {
+        Matrix2f src = new Matrix2f(
+                1, 2,
+                0, 1
+        );
+        float[][] arrayref = src.getArray();
+        float[][] array = src.copyArray();
+        Matrix2f copy = src.copy();
+
+        float[][] newArray =
+                {
+                        {1, 2},
+                        {3, 4}
+                };
+        src.setArray(newArray);
+
+        float[][] originalArray =
+                {
+                        {1, 2},
+                        {0, 1}
+                };
+
+        Util.assertFloatArrayEquals(newArray, src.getArray());
+        Util.assertFloatArrayEquals(originalArray, arrayref);
+        Util.assertFloatArrayEquals(originalArray, array);
+        assertEquals(new Matrix2f(originalArray), copy);
+    }
+
     public void testAdjugate() throws Exception
     {
         Matrix2f matrix = new Matrix2f(
@@ -93,9 +143,9 @@ public class Matrix2fTest extends TestCase
         float a = mat.get(0, 0);
         float b = mat.get(1, 1);
         float c = mat.get(0, 1);
-        assertEquals(1, a);
-        assertEquals(1, b);
-        assertEquals(0, c);
+        assertEquals(1.0f, a);
+        assertEquals(1.0f, b);
+        assertEquals(0.0f, c);
 
         mat.set(0, 0, 1);
         mat.set(0, 1, 2);
@@ -105,9 +155,9 @@ public class Matrix2fTest extends TestCase
         a = mat.get(0, 0);
         b = mat.get(1, 1);
         c = mat.get(0, 1);
-        assertEquals(1, a);
-        assertEquals(4, b);
-        assertEquals(2, c);
+        assertEquals(1.0f, a);
+        assertEquals(4.0f, b);
+        assertEquals(2.0f, c);
     }
 
     public void testAdd() throws Exception
