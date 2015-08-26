@@ -42,6 +42,15 @@ public class Vector3f implements Comparable<Vector3f>
                z * right.z;
     }
 
+    public Vector3f cross(Vector3f right)
+    {
+        return new Vector3f(
+                y * right.z - right.y * z,
+                -1 * (x * right.z - right.x * z),
+                x * right.y - right.x * y  
+        );
+    }
+
     public void normalize()
     {
         float mag = magnitude();
