@@ -24,6 +24,12 @@ public class Vector2f implements Comparable<Vector2f>
         this.y = y;
     }
 
+    public void set(float x, float y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+
     public float magnitude()
     {
         return (float)Math.sqrt(x * x + y * y);
@@ -121,6 +127,11 @@ public class Vector2f implements Comparable<Vector2f>
                 x / right,
                 y / right
         );
+    }
+
+    public Vector2f copy()
+    {
+        return new Vector2f(x, y);
     }
 
     public boolean equals(Object o)

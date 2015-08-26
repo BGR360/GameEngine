@@ -53,6 +53,14 @@ public class Vector4f implements Comparable<Vector4f>
         this(vec2, 0.0f, 0.0f);
     }
 
+    public void set(float x, float y, float z, float w)
+    {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.w = w;
+    }
+
     public float magnitude()
     {
         return (float)Math.sqrt(
@@ -178,6 +186,11 @@ public class Vector4f implements Comparable<Vector4f>
                 z / right,
                 w / right
         );
+    }
+
+    public Vector4f copy()
+    {
+        return new Vector4f(x, y, z, w);
     }
 
     public boolean equals(Object o)

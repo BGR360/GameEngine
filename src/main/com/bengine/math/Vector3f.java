@@ -36,6 +36,13 @@ public class Vector3f implements Comparable<Vector3f>
         this(vec2, 0.0f);
     }
 
+    public void set(float x, float y, float z)
+    {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
     public float magnitude()
     {
         return (float)Math.sqrt(
@@ -159,6 +166,11 @@ public class Vector3f implements Comparable<Vector3f>
                 y / right,
                 z / right
         );
+    }
+
+    public Vector3f copy()
+    {
+        return new Vector3f(x, y, z);
     }
 
     public boolean equals(Object o)

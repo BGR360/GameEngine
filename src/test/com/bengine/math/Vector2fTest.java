@@ -11,6 +11,21 @@ import junit.framework.TestCase;
 public class Vector2fTest extends TestCase
 {
 
+    public void testReferences() throws Exception
+    {
+        Vector2f vec1 = new Vector2f(1.0f, 2.0f);
+        float x = vec1.x;
+        float y = vec1.y;
+        Vector2f vec1ref = vec1;
+        Vector2f vec2 = new Vector2f(vec1.x, vec1.y);
+        Vector2f vec3 = vec1.copy();
+
+        vec1.x = 5;
+        vec1.y = 0;
+
+
+    }
+
     public void testMagnitude() throws Exception
     {
         Vector2f vector2f = new Vector2f(3, 4);
