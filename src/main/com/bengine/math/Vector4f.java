@@ -66,7 +66,8 @@ public class Vector4f implements Comparable<Vector4f>
         return (float)Math.sqrt(
                 x * x +
                 y * y +
-                z * z
+                z * z +
+                w * w
         );
     }
 
@@ -74,7 +75,8 @@ public class Vector4f implements Comparable<Vector4f>
     {
         return x * right.x +
                y * right.y +
-               z * right.z;
+               z * right.z +
+               w * right.w;
     }
 
     public void normalize()
@@ -147,7 +149,7 @@ public class Vector4f implements Comparable<Vector4f>
                 x * right.x,
                 y * right.y,
                 z * right.z,
-                z * right.z
+                w * right.w
         );
     }
 
@@ -172,7 +174,7 @@ public class Vector4f implements Comparable<Vector4f>
                 x / right.x,
                 y / right.y,
                 z / right.z,
-                w / right.z
+                w / right.w
         );
     }
 
