@@ -11,18 +11,18 @@ import org.jetbrains.annotations.NotNull;
 
 public class Matrix3f
 {
-    private static final int NUM_ROWS = 2;
-    private static final int NUM_COLS = 2;
+    private static final int NUM_ROWS = 3;
+    private static final int NUM_COLS = 3;
 
     private float[][] m = new float[NUM_ROWS][NUM_COLS];
 
-    public Matrix2f()
+    public Matrix3f()
     {
         this(1.0f, 0.0f,
              0.0f, 1.0f);
     }
 
-    public Matrix2f(
+    public Matrix3f(
             float r0c0, float r0c1,
             float r1c0, float r1c1
     )
@@ -31,51 +31,51 @@ public class Matrix3f
         m[1][0] = r1c0;     m[1][1] = r1c1;
     }
 
-    public Matrix2f(float[][] array)
+    public Matrix3f(float[][] array)
     {
         setArray(array);
     }
 
-    public static Matrix2f adjugate(@NotNull Matrix2f matrix)
+    public static Matrix3f adjugate(@NotNull Matrix3f matrix)
     {
-        return new Matrix2f(
+        return new Matrix3f(
                 matrix.get(1, 1)		,	-1 * matrix.get(0, 1),
                 -1 * matrix.get(1, 0)	,	matrix.get(0, 0)
         );
     }
 
-    public static float determinant(@NotNull Matrix2f matrix)
+    public static float determinant(@NotNull Matrix3f matrix)
     {
         return matrix.get(0, 0) * matrix.get(1, 1) - matrix.get(0, 1) * matrix.get(1, 0);
     }
 
-    public static Matrix2f inverse(@NotNull Matrix2f matrix)
+    public static Matrix3f inverse(@NotNull Matrix3f matrix)
     {
-        return Matrix2f.adjugate(matrix).mul(
-                (1.0f / Matrix2f.determinant(matrix))
+        return Matrix3f.adjugate(matrix).mul(
+                (1.0f / Matrix3f.determinant(matrix))
         );
     }
 
-    public static Matrix2f transpose(@NotNull Matrix2f matrix)
+    public static Matrix3f transpose(@NotNull Matrix3f matrix)
     {
-        return new Matrix2f(
+        return new Matrix3f(
                 matrix.get(0, 0), matrix.get(1, 0),
                 matrix.get(0, 1), matrix.get(1, 1)
         );
     }
 
-    public static Matrix2f scale(@NotNull Vector2f scale)
+    public static Matrix3f scale(@NotNull Vector2f scale)
     {
-        return new Matrix2f(
+        return new Matrix3f(
                 scale.x, 0,
                 0, scale.y
         );
     }
 
-    public static Matrix2f rotate(float thetaDegrees)
+    public static Matrix3f rotate(float thetaDegrees)
     {
         float thetaRadians = (float)Math.toRadians(thetaDegrees);
-        return new Matrix2f(
+        return new Matrix3f(
                 (float)Math.cos(thetaRadians), -1 * (float)Math.sin(thetaRadians),
                 (float)Math.sin(thetaRadians), (float)Math.cos(thetaRadians)
         );
@@ -96,18 +96,38 @@ public class Matrix3f
         return copy;
     }
 
-    public Matrix2f copy()
+    public Matrix3f copy()
     {
-        return new Matrix2f(m);
+        return new Matrix3f(m);
     }
 
     public float get(int row, int col)
     {
+        if(row < 0 || row > NUM_ROWS)
+            throw new ArrayIndexOutOfBoundsException(
+                    "Cannot access row " + row + " of " +
+                    NUM_ROWS + "x" + NUM_COLS + " matrix."
+            );
+        if(col < 0 || col > NUM_COLS)
+            throw new ArrayIndexOutOfBoundsException(
+                    "Cannot access column " + col + " of " +
+                    NUM_ROWS + "x" + NUM_COLS + " matrix."
+            );
         return m[row][col];
     }
 
     public void set(int row, int col, float value)
     {
+        if(row < 0 || row > NUM_ROWS)
+            throw new ArrayIndexOutOfBoundsException(
+                    "Cannot access row " + row + " of " +
+                    NUM_ROWS + "x" + NUM_COLS + " matrix."
+            );
+        if(col < 0 || col > NUM_COLS)
+            throw new ArrayIndexOutOfBoundsException(
+                    "Cannot access column " + col + " of " +
+                    NUM_ROWS + "x" + NUM_COLS + " matrix."
+            );
         m[row][col] = value;
     }
 
@@ -123,34 +143,34 @@ public class Matrix3f
         m = array;
     }
 
-    public Matrix2f add(@NotNull Matrix2f right)
+    public Matrix3f add(@NotNull Matrix3f right)
     {
-        return new Matrix2f(
+        return new Matrix3f(
                 m[0][0] + right.get(0, 0),		m[0][1] + right.get(0, 1),
                 m[1][0] + right.get(1, 0),		m[1][1] + right.get(1, 1)
         );
     }
 
-    public Matrix2f sub(@NotNull Matrix2f right)
+    public Matrix3f sub(@NotNull Matrix3f right)
     {
-        return new Matrix2f(
+        return new Matrix3f(
                 m[0][0] - right.get(0, 0), m[0][1] - right.get(0, 1),
                 m[1][0] - right.get(1, 0), m[1][1] - right.get(1, 1)
         );
     }
 
-    public Matrix2f mul(@NotNull Matrix2f right)
+    public Matrix3f mul(@NotNull Matrix3f right)
     {
-        return new Matrix2f(
+        return new Matrix3f(
                 m[0][0] * right.get(0, 0) + m[0][1] * right.get(1, 0),	m[0][0] * right.get(0, 1) + m[0][1] * right.get(1, 1),
 
                 m[1][0] * right.get(0, 0) + m[1][1] * right.get(1, 0),	m[1][0] * right.get(0, 1) + m[1][1] * right.get(1, 1)
         );
     }
 
-    public Matrix2f mul(float left)
+    public Matrix3f mul(float left)
     {
-        return new Matrix2f(
+        return new Matrix3f(
                 left * m[0][0], left * m[0][1],
                 left * m[1][0], left * m[1][1]
         );
@@ -166,9 +186,9 @@ public class Matrix3f
 
     public boolean equals(@NotNull Object o)
     {
-        if(!(o instanceof Matrix2f))
+        if(!(o instanceof Matrix3f))
             return false;
-        Matrix2f other = (Matrix2f)o;
+        Matrix3f other = (Matrix3f)o;
         for(int i = 0; i < NUM_ROWS; i++)
         {
             for(int j = 0; j < NUM_COLS; j++)

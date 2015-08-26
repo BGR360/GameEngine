@@ -32,6 +32,25 @@ public class Matrix2fTest extends TestCase
         }
     }
 
+    public void testIndexOutOfBounds() throws Exception
+    {
+        Matrix2f mat = new Matrix2f();
+
+        try
+        {
+            float value = mat.get(7, -1);
+            fail("get() did not throw ArrayIndexOutOfBoundsException");
+        }
+        catch(ArrayIndexOutOfBoundsException ignored) {}
+
+        try
+        {
+            mat.set(-1, 5, 0.0f);
+            fail("set() did not throw ArrayIndexOutOfBoundsException");
+        }
+        catch(ArrayIndexOutOfBoundsException ignored) {}
+    }
+
     public void testArrayCopy() throws Exception
     {
         Matrix2f src = new Matrix2f(

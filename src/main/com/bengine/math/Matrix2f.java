@@ -105,11 +105,31 @@ public class Matrix2f
 
     public float get(int row, int col)
     {
+        if(row < 0 || row > NUM_ROWS)
+            throw new ArrayIndexOutOfBoundsException(
+                    "Cannot access row " + row + " of " +
+                    NUM_ROWS + "x" + NUM_COLS + " matrix."
+            );
+        if(col < 0 || col > NUM_COLS)
+            throw new ArrayIndexOutOfBoundsException(
+                    "Cannot access column " + col + " of " +
+                    NUM_ROWS + "x" + NUM_COLS + " matrix."
+            );
         return m[row][col];
     }
 
     public void set(int row, int col, float value)
     {
+        if(row < 0 || row > NUM_ROWS)
+            throw new ArrayIndexOutOfBoundsException(
+                    "Cannot access row " + row + " of " +
+                    NUM_ROWS + "x" + NUM_COLS + " matrix."
+            );
+        if(col < 0 || col > NUM_COLS)
+            throw new ArrayIndexOutOfBoundsException(
+                    "Cannot access column " + col + " of " +
+                    NUM_ROWS + "x" + NUM_COLS + " matrix."
+            );
         m[row][col] = value;
     }
 
