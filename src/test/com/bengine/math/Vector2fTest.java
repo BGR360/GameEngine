@@ -25,6 +25,7 @@ public class Vector2fTest extends TestCase
         Vector2f vec2 = new Vector2f(-3.5f, 0.0f);
         float expected = -3.5f;
         float result = vec1.dot(vec2);
+        assertEquals(expected, result);
     }
 
     public void testNormalize() throws Exception
@@ -35,6 +36,21 @@ public class Vector2fTest extends TestCase
         vec.normalize();
         assertEquals(expected, result);
         assertEquals(result, vec);
+
+        Vector2f zeroVec = new Vector2f();
+        try
+        {
+            zeroVec.normalize();
+            fail("normalize() did not throw IllegalStateException for zero vector.");
+        }
+        catch(IllegalStateException ignored) {}
+
+        try
+        {
+            Vector2f normalized = zeroVec.normalized();
+            fail("normalized() did not throw IllegalStateException for zero vector.");
+        }
+        catch(IllegalStateException ignored) {}
     }
 
     public void testAdd() throws Exception
@@ -77,7 +93,16 @@ public class Vector2fTest extends TestCase
     {
         Vector2f left = new Vector2f(1.0f, -3.14f);
         Vector2f right = new Vector2f(0.0f, 2.0f);
-        Vector2f expected = new Vector2f(0.0f, -6.28f);
+
+        try
+        {
+            Vector2f result = left.div(right);
+            fail("div() did not throw IllegalArgumentException for divide-by-zero");
+        }
+        catch(IllegalArgumentException ignored) {}
+
+        right = new Vector2f(2.0f, 2.0f);
+        Vector2f expected = new Vector2f(0.5f, -1.57f);
         Vector2f result = left.div(right);
         assertEquals(expected, result);
     }
@@ -85,7 +110,16 @@ public class Vector2fTest extends TestCase
     public void testScalarDiv() throws Exception
     {
         Vector2f left = new Vector2f(1.0f, -3.14f);
-        float right = 2.0f;
+        float right = 0.0f;
+
+        try
+        {
+            Vector2f result = left.div(right);
+            fail("div() did not throw IllegalArgumentException for divide-by-zero");
+        }
+        catch (IllegalArgumentException ignored) {}
+
+        right = 2.0f;
         Vector2f expected = new Vector2f(0.5f, -1.57f);
         Vector2f result = left.div(right);
         assertEquals(expected, result);
