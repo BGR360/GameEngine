@@ -110,6 +110,16 @@ public class Matrix4f
         return new Matrix4f(Matrix3f.lookAt(position, target));
     }
 
+    public static Matrix4f perspective(float fov, float aspectRatio, float zNear, float zFar)
+    {
+        return new Matrix4f(
+            1.0f / (aspectRatio * (float)Math.tan(fov / 2.0f)), 0, 0, 0,
+            0, 1.0f / (float)Math.tan(fov / 2.0f), 0, 0,
+            0, 0, (-zNear - zFar) / (zFar - zNear), (-2.0f * zFar * zNear) / (zFar - zNear),
+            0, 0, -1, 0
+        );
+    }
+
     public float[][] getArray()
     {
         return m;
