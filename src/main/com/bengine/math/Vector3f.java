@@ -26,6 +26,16 @@ public class Vector3f implements Comparable<Vector3f>
         this.z = z;
     }
 
+    public Vector3f(Vector2f vec2, float z)
+    {
+        this(vec2.x, vec2.y, z);
+    }
+
+    public Vector3f(Vector2f vec2)
+    {
+        this(vec2, 0.0f);
+    }
+
     public float magnitude()
     {
         return (float)Math.sqrt(
