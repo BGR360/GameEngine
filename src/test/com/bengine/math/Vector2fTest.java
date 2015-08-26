@@ -11,6 +11,7 @@ import junit.framework.TestCase;
 public class Vector2fTest extends TestCase
 {
 
+    @SuppressWarnings("UnnecessaryLocalVariable")
     public void testReferences() throws Exception
     {
         Vector2f vec1 = new Vector2f(1.0f, 2.0f);
@@ -23,7 +24,14 @@ public class Vector2fTest extends TestCase
         vec1.x = 5;
         vec1.y = 0;
 
-
+        assertEquals(1.0f, x);
+        assertEquals(2.0f, y);
+        assertEquals(5.0f, vec1ref.x);
+        assertEquals(0.0f, vec1ref.y);
+        assertEquals(1.0f, vec2.x);
+        assertEquals(2.0f, vec2.y);
+        assertEquals(1.0f, vec3.x);
+        assertEquals(2.0f, vec3.y);
     }
 
     public void testMagnitude() throws Exception
