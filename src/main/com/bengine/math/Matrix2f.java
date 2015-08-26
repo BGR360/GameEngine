@@ -3,9 +3,13 @@
  *
  * 2x2 floating-point matrix.
  * Matrix is stored in row-major order.
+ *
+ * TODO: Add @NotNull annotations to all methods of matrices and vectors
  */
 
 package com.bengine.math;
+
+import org.jetbrains.annotations.NotNull;
 
 public class Matrix2f
 {
@@ -26,27 +30,27 @@ public class Matrix2f
         m[1][0] = r1c0;     m[1][1] = r1c1;
     }
 
-    public static Matrix2f adjugate(Matrix2f matrix)
+    public static Matrix2f adjugate(@NotNull Matrix2f matrix)
     {
         return new Matrix2f();
     }
 
-    public static float determinant(Matrix2f matrix)
+    public static float determinant(@NotNull Matrix2f matrix)
     {
         return 0.0f;
     }
 
-    public static Matrix2f inverse(Matrix2f matrix)
+    public static Matrix2f inverse(@NotNull Matrix2f matrix)
     {
         return new Matrix2f();
     }
 
-    public static Matrix2f transpose(Matrix2f matrix)
+    public static Matrix2f transpose(@NotNull Matrix2f matrix)
     {
         return new Matrix2f();
     }
 
-    public static Matrix2f scale(Vector2f scale)
+    public static Matrix2f scale(@NotNull Vector2f scale)
     {
         return new Matrix2f();
     }
@@ -85,17 +89,17 @@ public class Matrix2f
 
     }
 
-    public Matrix2f add(Matrix2f right)
+    public Matrix2f add(@NotNull Matrix2f right)
     {
         return new Matrix2f();
     }
 
-    public Matrix2f sub(Matrix2f right)
+    public Matrix2f sub(@NotNull Matrix2f right)
     {
         return new Matrix2f();
     }
 
-    public Matrix2f mul(Matrix2f right)
+    public Matrix2f mul(@NotNull Matrix2f right)
     {
         return new Matrix2f();
     }
@@ -105,8 +109,44 @@ public class Matrix2f
         return new Matrix2f();
     }
 
-    public Vector2f mul(Vector2f vec)
+    public Vector2f mul(@NotNull Vector2f vec)
     {
         return new Vector2f();
+    }
+
+    public boolean equals(@NotNull Object o)
+    {
+        if(!(o instanceof Matrix2f))
+            return false;
+        Matrix2f other = (Matrix2f)o;
+        for(int i = 0; i < 2; i++)
+        {
+            for(int j = 0; j < 2; j++)
+            {
+                if(m[i][j] != other.get(i, j))
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    public String toString()
+    {
+        String str = "{";
+        for(int i = 0; i < 2; i++)
+        {
+            str += "{";
+            for(int j = 0; j < 2; j++)
+            {
+                str += m[i][j];
+                if(j + 1 < 2)
+                    str += ", ";
+            }
+            str += "}";
+            if(i + 1 < 2)
+                str += ", ";
+        }
+        str += "}";
+        return str;
     }
 }
