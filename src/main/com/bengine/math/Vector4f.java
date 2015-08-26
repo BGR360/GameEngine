@@ -35,22 +35,7 @@ public class Vector4f implements Comparable<Vector4f>
 
     public Vector4f(Vector3f vec3)
     {
-        this(vec3, 0.0f);
-    }
-
-    public Vector4f(Vector2f vec2, float z, float w)
-    {
-        this(vec2.x, vec2.y, z, w);
-    }
-
-    public Vector4f(Vector2f vec2, float z)
-    {
-        this(vec2, z, 0.0f);
-    }
-
-    public Vector4f(Vector2f vec2)
-    {
-        this(vec2, 0.0f, 0.0f);
+        this(vec3, 1.0f);
     }
 
     public void set(float x, float y, float z, float w)

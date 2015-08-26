@@ -41,21 +41,34 @@ public class Matrix3f
 
     public static Matrix3f adjugate(@NotNull Matrix3f matrix)
     {
-        return new Matrix3f(
-
-        );
+        return Matrix3f.transpose(Matrix3f.cofactor(matrix));
     }
 
     public static Matrix3f cofactor(@NotNull Matrix3f matrix)
     {
         return new Matrix3f(
+                matrix.get(1, 1) * matrix.get(2, 2) - matrix.get(1, 2) * matrix.get(2, 1),
+                -1 * (matrix.get(1, 0) * matrix.get(2, 2) - matrix.get(1, 2) * matrix.get(2, 0)),
+                matrix.get(1, 0) * matrix.get(2, 1) - matrix.get(1, 1) * matrix.get(2, 0),
 
+                -1 * (matrix.get(0, 1) * matrix.get(2, 2) - matrix.get(0, 2) * matrix.get(2, 1)),
+                matrix.get(0, 0) * matrix.get(2, 2) - matrix.get(0, 2) * matrix.get(2, 0),
+                -1 * (matrix.get(0, 0) * matrix.get(2, 1) - matrix.get(0, 1) * matrix.get(2, 0)),
+
+                matrix.get(0, 1) * matrix.get(1, 2) - matrix.get(0, 2) * matrix.get(1, 1),
+                -1 * (matrix.get(0, 0) * matrix.get(1, 2) - matrix.get(0, 2) * matrix.get(1, 0)),
+                matrix.get(0, 0) * matrix.get(1, 1) - matrix.get(0, 1) * matrix.get(1, 0)
         );
     }
 
     public static float determinant(@NotNull Matrix3f matrix)
     {
-        return matrix.get(0, 0) * matrix.get(1, 1) - matrix.get(0, 1) * matrix.get(1, 0);
+        return matrix.get(0, 0) * matrix.get(1, 1) * matrix.get(2, 2)
+               + matrix.get(0, 1) * matrix.get(1, 2) * matrix.get(2, 0)
+               + matrix.get(0, 2) * matrix.get(1, 0) * matrix.get(2, 1)
+               - matrix.get(0, 2) * matrix.get(1, 1) * matrix.get(2, 0)
+               - matrix.get(0, 0) * matrix.get(1, 2) * matrix.get(2, 1)
+               - matrix.get(0, 1) * matrix.get(1, 0) * matrix.get(2, 2);
     }
 
     public static Matrix3f inverse(@NotNull Matrix3f matrix)
@@ -65,10 +78,12 @@ public class Matrix3f
         );
     }
 
-    public static Matrix3f tilde(@NotNull Vector3f matrix)
+    public static Matrix3f tilde(@NotNull Vector3f vec)
     {
         return new Matrix3f(
-
+                0, -vec.z, vec.y,
+                vec.z, 0, -vec.x,
+                -vec.y, vec.x, 0
         );
     }
 
@@ -84,36 +99,47 @@ public class Matrix3f
     public static Matrix3f scale(@NotNull Vector3f scale)
     {
         return new Matrix3f(
-
+                scale.x, 0, 0,
+                0, scale.y, 0,
+                0, 0, scale.z
         );
     }
 
     public static Matrix3f rotate(float thetaDegrees, Vector3f axis)
     {
-        float thetaRadians = (float)Math.toRadians(thetaDegrees);
-        return new Matrix3f(
+        Matrix3f I = new Matrix3f();
+        float c = (float)Math.cos(Math.toRadians(thetaDegrees));
+        float s = (float)Math.sin(Math.toRadians(thetaDegrees));
+        float t = 1.0f - c;
+        Vector3f a = axis.normalized();
+        Matrix3f tildeAxis = tilde(a);
 
-        );
+        //I + s * tildeAxis + t * (tildeAxis * tildeAxis)
+        return I.add(tildeAxis.mul(s).add(
+                tildeAxis.mul(tildeAxis).mul(t)
+        ));
     }
 
     public static Matrix3f rotate(Vector3f eulerAngles)
     {
-        return new Matrix3f(
-
-        );
+        return rotate(eulerAngles.x, eulerAngles.y, eulerAngles.z);
     }
 
     public static Matrix3f rotate(float degreesX, float degreesY, float degreesZ)
     {
-        return new Matrix3f(
+        Matrix3f rotateX = rotate(degreesX, new Vector3f(1, 0, 0));
+        Matrix3f rotateY = rotate(degreesY, new Vector3f(0, 1, 0));
+        Matrix3f rotateZ = rotate(degreesZ, new Vector3f(0, 0, 1));
 
-        );
+        return rotateZ.mul(rotateY.mul(rotateX));
     }
 
     public static Matrix3f translate(Vector2f translation)
     {
         return new Matrix3f(
-
+                1, 0, translation.x,
+                0, 1, translation.y,
+                0, 0, 1
         );
     }
 
@@ -219,7 +245,17 @@ public class Matrix3f
     public Matrix3f mul(@NotNull Matrix3f right)
     {
         return new Matrix3f(
+                m[0][0] * right.get(0, 0) + m[0][1] * right.get(1, 0) + m[0][2] * right.get(2, 0),
+                m[0][0] * right.get(0, 1) + m[0][1] * right.get(1, 1) + m[0][2] * right.get(2, 1),
+                m[0][0] * right.get(0, 2) + m[0][1] * right.get(1, 2) + m[0][2] * right.get(2, 2),
 
+                m[1][0] * right.get(0, 0) + m[1][1] * right.get(1, 0) + m[1][2] * right.get(2, 0),
+                m[1][0] * right.get(0, 1) + m[1][1] * right.get(1, 1) + m[1][2] * right.get(2, 1),
+                m[1][0] * right.get(0, 2) + m[1][1] * right.get(1, 2) + m[1][2] * right.get(2, 2),
+
+                m[2][0] * right.get(0, 0) + m[2][1] * right.get(1, 0) + m[2][2] * right.get(2, 0),
+                m[2][0] * right.get(0, 1) + m[2][1] * right.get(1, 1) + m[2][2] * right.get(2, 1),
+                m[2][0] * right.get(0, 2) + m[2][1] * right.get(1, 2) + m[2][2] * right.get(2, 2)
         );
     }
 

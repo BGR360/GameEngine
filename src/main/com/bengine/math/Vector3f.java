@@ -33,7 +33,7 @@ public class Vector3f implements Comparable<Vector3f>
 
     public Vector3f(Vector2f vec2)
     {
-        this(vec2, 0.0f);
+        this(vec2, 1.0f);
     }
 
     public void set(float x, float y, float z)

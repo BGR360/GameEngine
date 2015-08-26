@@ -2,6 +2,8 @@
  * Created by Ben on 8/26/15.
  *
  * 2-component, floating-point vector
+ *
+ * TODO: Vector swizzling
  */
 
 package com.bengine.math;

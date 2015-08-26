@@ -30,6 +30,33 @@ public class Matrix3fTest extends TestCase
                 }
             }
         }
+
+        public static void assertCloseEnough(String message, float expected, float actual)
+        {
+            final float THRESHOLD = 0.000001f;
+
+            if(Math.abs(expected - actual) > THRESHOLD)
+            {
+                fail(
+                        message +
+                        "Float not within threshold: " +
+                        "expected:<" + expected + "> " +
+                        "but was:<" + actual + ">"
+                );
+            }
+        }
+
+        public static void assertCloseEnough(float expected, float actual)
+        {
+            assertCloseEnough("", expected, actual);
+        }
+
+        public static void assertCloseEnough(Vector3f expected, Vector3f actual)
+        {
+            assertCloseEnough("x-component", expected.x, actual.x);
+            assertCloseEnough("y-component", expected.y, actual.y);
+            assertCloseEnough("z-component", expected.z, actual.z);
+        }
     }
 
     public void testIndexOutOfBounds() throws Exception
@@ -239,7 +266,7 @@ public class Matrix3fTest extends TestCase
 
         Vector3f result = op.mul(vec);
 
-        assertEquals(expected, result);
+        Util.assertCloseEnough(expected, result);
     }
 
     public void testTranslate() throws Exception
