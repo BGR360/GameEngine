@@ -5,6 +5,7 @@
  */
 
 import com.bengine.core.Game;
+import com.bengine.core.Time;
 
 public class BengineGame extends Game
 {
@@ -18,6 +19,8 @@ public class BengineGame extends Game
     @Override
     protected void update()
     {
-
+        Time.newFrame();
+        double delta = Time.getDelta();
+        System.out.printf("%2.2f\n", delta * 1000);
     }
 }
