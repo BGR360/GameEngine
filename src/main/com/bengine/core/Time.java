@@ -13,9 +13,6 @@ public class Time
     // The number of nanoseconds in one second
     private static final long ONE_SECOND = 1000000000;
 
-    // The number of nanoseconds in one millisecond
-    private static final long ONE_MILLISECOND = 1000000;
-
     // The time (in nanoseconds) when the application started
     private static final long START_TIME = System.nanoTime();
 
@@ -26,14 +23,15 @@ public class Time
     private static long mDeltaLastFrame = 0;
 
     /**
-     * Returns the amount of time that has elapsed since
-     * the application started.
+     * Returns the amount of time (in seconds) that
+     * has elapsed since the application started.
      * @return The number of nanoseconds that have passed
      * since the application's start
      */
-    public static long getTime()
+    public static float getTime()
     {
-        return System.nanoTime() - START_TIME;
+        long timeNanos = System.nanoTime() - START_TIME;
+        return (float)(timeNanos / ONE_SECOND);
     }
 
     /**
@@ -59,11 +57,11 @@ public class Time
      * This method is one of the most important methods in the
      * engine because it is essential in providing convincing
      * and lag-immune motion and/or physics.
-     * @return The number of nanoseconds that it took the last frame
-     * to finish executing.
+     * @return The amount of time (in seconds) that it took
+     * the last frame to finish executing.
      */
-    public static long getDelta()
+    public static float getDelta()
     {
-        return mDeltaLastFrame;
+        return (float)(mDeltaLastFrame / ONE_SECOND);
     }
 }
