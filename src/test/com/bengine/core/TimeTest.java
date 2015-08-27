@@ -10,8 +10,8 @@ import junit.framework.TestCase;
 
 public class TimeTest extends TestCase
 {
-    private static final float LONG_TIME_THRESHOLD =    0.00000000000001f;
-    private static final float SHORT_TIME_THRESHOLD =   0.0000000000000000000000001f;
+    private static final float LONG_TIME_THRESHOLD =    0.01f;
+    private static final float SHORT_TIME_THRESHOLD =   0.01f;
 
     static class Util
     {
@@ -46,13 +46,14 @@ public class TimeTest extends TestCase
 
     public void testWaitOneSecond() throws Exception
     {
-        float currentTime = Time.getTime();
+        double currentTime = Time.getTime();
         Time.newFrame();
         Thread.sleep(1000);
         Time.newFrame();
-        float delta = Time.getDelta();
-        float expected = 1.0f;
-        Util.assertCloseEnoughLong(expected, delta);
+        double delta = Time.getDelta();
+        double expected = 1.0f;
+        System.out.println(delta);
+        Util.assertCloseEnoughLong((float)expected, (float)delta);
     }
 
     public void testShortTimes() throws Exception
@@ -61,13 +62,13 @@ public class TimeTest extends TestCase
         for(int i = 0; i < numTests; i++)
         {
             // Wait between 0 and 50 ms
-            int waitTimeMillis = (int)(Math.random() * 50);
+            int waitTimeMillis = (int)(Math.random() * 100);
             Time.newFrame();
             Thread.sleep(waitTimeMillis);
             Time.newFrame();
-            float delta = Time.getDelta();
-            float expected = waitTimeMillis / 1000;
-            Util.assertCloseEnoughShort(expected, delta);
+            double delta = Time.getDelta();
+            double expected = (double)waitTimeMillis / 1000;
+            Util.assertCloseEnoughShort((float)expected, (float)delta);
         }
     }
 }

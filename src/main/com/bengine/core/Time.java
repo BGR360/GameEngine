@@ -28,10 +28,10 @@ public class Time
      * @return The number of nanoseconds that have passed
      * since the application's start
      */
-    public static float getTime()
+    public static double getTime()
     {
         long timeNanos = System.nanoTime() - START_TIME;
-        return (float)(timeNanos / ONE_SECOND);
+        return (double)timeNanos / ONE_SECOND;
     }
 
     /**
@@ -60,8 +60,8 @@ public class Time
      * @return The amount of time (in seconds) that it took
      * the last frame to finish executing.
      */
-    public static float getDelta()
+    public static double getDelta()
     {
-        return (float)(mDeltaLastFrame / ONE_SECOND);
+        return (double)mDeltaLastFrame / ONE_SECOND;
     }
 }
