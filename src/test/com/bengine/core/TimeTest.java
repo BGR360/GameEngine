@@ -51,8 +51,7 @@ public class TimeTest extends TestCase
         Thread.sleep(1000);
         Time.newFrame();
         double delta = Time.getDelta();
-        double expected = 1.0f;
-        System.out.println(delta);
+        double expected = 1.0;
         Util.assertCloseEnoughLong((float)expected, (float)delta);
     }
 
@@ -62,12 +61,12 @@ public class TimeTest extends TestCase
         for(int i = 0; i < numTests; i++)
         {
             // Wait between 0 and 50 ms
-            int waitTimeMillis = (int)(Math.random() * 100);
+            int waitTimeMillis = (int)(Math.random() * 50);
             Time.newFrame();
             Thread.sleep(waitTimeMillis);
             Time.newFrame();
             double delta = Time.getDelta();
-            double expected = (double)waitTimeMillis / 1000;
+            double expected = (double)waitTimeMillis / 1000.0;
             Util.assertCloseEnoughShort((float)expected, (float)delta);
         }
     }

@@ -11,7 +11,7 @@ package com.bengine.core;
 public class Time
 {
     // The number of nanoseconds in one second
-    private static final long ONE_SECOND = 1000000000;
+    private static final long ONE_SECOND = 1000000000L;
 
     // The time (in nanoseconds) when the application started
     private static final long START_TIME = System.nanoTime();
@@ -31,7 +31,7 @@ public class Time
     public static double getTime()
     {
         long timeNanos = System.nanoTime() - START_TIME;
-        return (double)timeNanos / ONE_SECOND;
+        return (double)timeNanos / (double)ONE_SECOND;
     }
 
     /**
@@ -62,6 +62,6 @@ public class Time
      */
     public static double getDelta()
     {
-        return (double)mDeltaLastFrame / ONE_SECOND;
+        return (double)mDeltaLastFrame / (double)ONE_SECOND;
     }
 }

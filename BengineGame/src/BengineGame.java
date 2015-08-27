@@ -20,11 +20,7 @@ public class BengineGame extends Game
     protected void update()
     {
         Time.newFrame();
-        float delta = Time.getDelta();
-        System.out.printf("%1.7f\n", delta);
-        for(int i = 0; i < 1000; i++)
-        {
-            System.out.print("");
-        }
+        double delta = Time.getDelta();
+        System.out.printf("%2.2f\n", delta * 1000);
     }
 }
